@@ -41,15 +41,24 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Cell 1</td>
-                                    <td>Cell 2</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                    <td><button class="btn btn-primary" type="button" style="margin-top: 0px;margin-right: 0px;margin-left: 5px;">Delete</button></td>
-                                </tr>
+                                <?php
+                                    include "conn.php"; //add connection 
+                                    $sql = "select * from room";//add a new sql query
+                                    $result = mysqli_query($conn, $sql);
 
+                                    while($rows = mysqli_fetch_array($result))
+                                    {   
+                                        echo "<tr>";
+                                        echo "<td>".$rows['roomID']."</td>";
+                                        echo "<td>".$rows['roomName']."</td>";
+                                        echo "<td>".$rows['roomOwner']."</td>";
+                                        echo "<td>".$rows['roomRequirement']."</td>";
+                                        echo "<td>".$rows['object1']."</td>";
+                                        echo "<td>".$rows['object2']."</td>";
+                                        echo "<td><a href='deleteRoom.php?id=".$rows['roomID']."'><button class='btn btn-primary' type='button' style='margin-top: 0px;margin-right: 0px;margin-left: 5px;'>Delete</button></a></td>";
+                                        echo "</tr>";
+                                }
+                                ?>
                                 <tr></tr>
                                 <tr></tr>
                                 <tr></tr>
@@ -62,6 +71,8 @@
             </div>
         </div>
     </div>
+    
+    
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <?php include "dashboardfooter.php" ?>

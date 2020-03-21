@@ -37,16 +37,34 @@ session_start();
                         </div>
                         <div class="form-group text-left">
                             <input class="form-control" type="text" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminic" placeholder="IC Number"></div>
-                        <div class="form-group"><select class="form-control" required="" style="width: 300px;margin-left: 230px;" name="admingender"><option value="None">Choose your gender</option><option value="Male">Male</option><option value="Female">Female</option></select></div>
+                        <div class="form-group">
+                        <select class="form-control" required="" style="width: 300px;margin-left: 230px;" name="admingender">
+                            <option value="None">Choose your gender</option>
+                            <option value="1">Male</option>
+                            <option value="2">Female</option>
+                        </select>
+                        </div>
                         <div
                             class="form-group">
                             <h5 style="margin-left: 230px;width: 300px;">Date of birth</h5><input class="form-control" type="date" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="admindob"></div>
-                <div class="form-group"><input class="form-control" type="tel" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminphone" placeholder="012-3456789"></div>
-                <div class="form-group"><textarea class="form-control" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminaddress" placeholder="Address"></textarea></div>
-                <div class="form-group"><input class="form-control" type="email" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminemail" placeholder="Email"></div>
-                <div class="form-group"><input class="form-control" type="password" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminpassword1" placeholder="Password"></div>
-                <div class="form-group"><input class="form-control" type="password" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminpassword2" placeholder="Password (Repeat)"></div>
-                <div class="form-group"><button class="btn btn-primary" type="submit" style="margin-left: 230px;width: 300px;">Add</button></div>
+                <div class="form-group">
+                    <input class="form-control" type="tel" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminphone" placeholder="012-3456789">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminaddress" placeholder="Address"></textarea>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="email" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminemail" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminpassword1" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminpassword2" placeholder="Password (Repeat)">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" style="margin-left: 230px;width: 300px;">Add</button>
+                </div>
                 </form>
             </div>
         </div>
@@ -56,38 +74,40 @@ session_start();
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <?php
     
-    include "conn.php";
-    if(isset($_POST['username'])){//if the information input then the function below will start.
-        //retrieve data from the top
-        $username = mysqli_real_escape_string($conn,$_POST['adminname']);
-        $ic = mysqli_real_escape_string($conn,$_POST['adminic']);
-        $gender = mysqli_real_escape_string($conn,$_POST['admingender']);
-        $phone = mysqli_real_escape_string($conn,$_POST['adminphone']);
-        $address = mysqli_real_escape_string($conn,$_POST['adminaddress']);
-        $email = mysqli_real_escape_string($conn,$_POST['adminemail']);
-        $password = mysqli_real_escape_string($conn,$_POST['adminpassword1']);
-        $confirmpass = mysqli_real_escape_string($conn,$_POST['adminpassword2']);
-        //if password and confirm pass is different then it will not be able to register.
-        if($password !== $confirmpass){
-            
-            echo "<script>alert('Password and confirmed password not same!');";
-            die("window.history.go(-1);</script>");
-        }
-    
-        //insert the data into the database
-        $sql = "Insert into adminhost (Name, IC, Gender, DoB, PhoneNum, Email, password, Address, Category) values ('$username', '$ic','$gender','$phone','$address','$email',".md5($password)."','$email','1');";
-    
-        // echo $sql;
-        //if connection with Db failed then unable to register, else register successfully
-        mysqli_query($conn, $sql);
-        if(mysqli_affected_rows($conn)<=0){
-            echo "<script>alert('Unable to add admin! \\nPlease Try Again!');";
-            die("window.history.go(-1);</script>");
-        }else{
-             echo "<script>alert('Added Successfully!');";
-            echo "window.location.href='admindashboard.php  ';</script>";
-        }
-        }
+        include "conn.php";
+        if(isset($_POST['adminname'])){//if the information input then the function below will start.
+            //retrieve data from the top
+            $username = mysqli_real_escape_string($conn,$_POST['adminname']);
+            $ic = mysqli_real_escape_string($conn,$_POST['adminic']);
+            $gender = mysqli_real_escape_string($conn,$_POST['admingender']);
+            $dob = date('Y-m-d', strtotime($_POST['admindob']));
+            $phone = mysqli_real_escape_string($conn,$_POST['adminphone']);
+            $address = mysqli_real_escape_string($conn,$_POST['adminaddress']);
+            $email = mysqli_real_escape_string($conn,$_POST['adminemail']);
+            $password = mysqli_real_escape_string($conn,$_POST['adminpassword1']);
+            $confirmpass = mysqli_real_escape_string($conn,$_POST['adminpassword2']);
+            //if password and confirm pass is different then it will not be able to register.
+            if($password !== $confirmpass){
+                
+                echo "<script>alert('Password and confirmed password not same!');";
+                die("window.history.go(-1);</script>");
+            }
+        
+            //insert the data into the database
+            $sql = "Insert into adminhost (Name, IC, Gender, DoB, PhoneNum, Email, password, Address) 
+            values ('$username', '$ic','$gender','$dob',$phone','$email',".md5($password)."','$address');";
+        
+            // echo $sql;
+            //if connection with Db failed then unable to register, else register successfully
+            mysqli_query($conn, $sql);
+            if(mysqli_affected_rows($conn)<=0){
+                echo "<script>alert('Unable to add admin! \\nPlease Try Again!');";
+                die("window.history.go(-1);</script>");
+            }else{
+                echo "<script>alert('Added Successfully!');";
+                echo "window.location.href='admindashboard.php';</script>";
+            }
+            }
     ?>
     <?php include "dashboardfooter.php" ?>
 </body>
