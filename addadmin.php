@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -22,33 +25,12 @@
 
 <body style="background-color: rgb(241,247,252);">
   <?php include "nav2.php" ?>
-  <?php require "conn.php";
-  if(isset($_POST['user']) && isset($_POST['password'])){
-    $user = $_POST['adminname'];
-    $id = $_POST['adminic'];
-    $gender = $_POST['admingender'];
-    $dob = $_POST['admindob'];
-    $phone = $_POST['adminphone'];
-    $address = $_POST['adminaddress'];
-    $email = $_POST['adminemail'];
-    $password = $_POST['adminpassword1'];
 
-
-    $query = "INSERT INTO 'users' (Name ,IC ,Gender, DoB, PhoneNum, Email, password, Address) 
-        VALUES('$user', ' $id ', '$gender','$dob','$phone','$address','$email','$password')";
-    $result = mysqli_query($query,$conn);
-    if($result){
-        $msg = "Registered Sussecfully";
-    }
-    else
-        $msg = "Error Registering";
-}
-?>
     <div style="margin-left: 350px;margin-top: 30px; margin-bottom: 30px;width: 800px;">
         <div class="container" style="width: 800px;margin: 0px;margin-right: 0px;margin-left: 0px;background-color: #ace7ef;background-image: url(&quot;assets/img/background.jpg&quot;);background-repeat: no-repeat;background-size: cover;">
             <div class="row add" style="width: 800px;background-color: rgba(0,0,0,0.37);">
                 <div class="col-md-12">
-                    <form style="background-repeat: no-repeat;background-size: auto;">
+                    <form  method="post" action="addadmin.php" style="background-repeat: no-repeat;background-size: auto;">
                         <h3 class="text-center" style="color: rgb(237,237,237);">Add Admin</h3>
                         <div class="form-group text-left">
                             <input class="form-control" type="text" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminname" placeholder="Fullname">
@@ -72,6 +54,41 @@
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <?php
+    
+    include "conn.php";
+    if(isset($_POST['username'])){//if the information input then the function below will start.
+        //retrieve data from the top
+        $username = mysqli_real_escape_string($conn,$_POST['adminname']);
+        $ic = mysqli_real_escape_string($conn,$_POST['adminic']);
+        $gender = mysqli_real_escape_string($conn,$_POST['admingender']);
+        $phone = mysqli_real_escape_string($conn,$_POST['adminphone']);
+        $address = mysqli_real_escape_string($conn,$_POST['adminaddress']);
+        $email = mysqli_real_escape_string($conn,$_POST['adminemail']);
+        $password = mysqli_real_escape_string($conn,$_POST['adminpassword1']);
+        $confirmpass = mysqli_real_escape_string($conn,$_POST['adminpassword2']);
+        //if password and confirm pass is different then it will not be able to register.
+        if($password !== $confirmpass){
+            
+            echo "<script>alert('Password and confirmed password not same!');";
+            die("window.history.go(-1);</script>");
+        }
+    
+        //insert the data into the database
+        $sql = "Insert into adminhost (Name, IC, Gender, DoB, PhoneNum, Email, password, Address, Category) values ('$username', '$ic','$gender','$phone','$address','$email',".md5($password)."','$email','1');";
+    
+        // echo $sql;
+        //if connection with Db failed then unable to register, else register successfully
+        mysqli_query($conn, $sql);
+        if(mysqli_affected_rows($conn)<=0){
+            echo "<script>alert('Unable to add admin! \\nPlease Try Again!');";
+            die("window.history.go(-1);</script>");
+        }else{
+             echo "<script>alert('Added Successfully!');";
+            echo "window.location.href='admindashboard.php  ';</script>";
+        }
+        }
+    ?>
     <?php include "dashboardfooter.php" ?>
 </body>
 
