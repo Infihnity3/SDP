@@ -27,9 +27,31 @@
             <div class="row total" style="height: 500px;padding: 0px;">
                 <div class="col-md-6" style="height: 500px;background-position: center;background-size: auto;background-repeat: no-repeat;margin: px;">
                     <h1 class="text-center">Total Users</h1>
+                    <?php
+                    include "conn.php";
+                    $sql = "select ID from adminhost where Category = '2'";
+                    $result = mysqli_query($conn, $sql);// Execute the query and store the result set 
+                    if ($result) 
+                    { 
+                        // it return number of rows in the table. 
+                        $row = mysqli_num_rows($result); 
+                        echo "<h1>".$row."</h1>";
+                    }
+                    ?>
                 </div>
                 <div class="col-md-6" style="height: 500px;background-position: center;background-size: auto;background-repeat: no-repeat;">
                     <h1 class="text-center">Total Rooms</h1>
+                    <?php
+                    include "conn.php";
+                    $sql = "select roomID from room";
+                    $result = mysqli_query($conn, $sql);// Execute the query and store the result set 
+                    if ($result) 
+                    { 
+                        // it return number of rows in the table. 
+                        $row = mysqli_num_rows($result); 
+                        echo "<h1>".$row."</h1>";
+                    }
+                    ?>
                 </div>
             </div>
         </div>

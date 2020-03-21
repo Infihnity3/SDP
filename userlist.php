@@ -41,21 +41,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Cell 1</td>
-                                    <td>Cell 2</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                    <td>Text</td>
-                                </tr>
-                                <tr></tr>
-                                <tr></tr>
-                                <tr></tr>
-                                <tr></tr>
-                                <tr></tr>
+                            <?php
+                                    include "conn.php"; //add connection 
+                                    $sql = "select * from adminhost";//add a new sql query
+                                    $result = mysqli_query($conn, $sql);
+                                    while($rows = mysqli_fetch_array($result))
+                                    {
+                                        if ($rows['Category'] === '2'){
+                                            echo "<tr>";
+                                            echo "<td>".$rows['ID']."</td>";
+                                            echo "<td>".$rows['Name']."</td>";
+                                            echo "<td>".$rows['IC']."</td>";
+                                            if ($rows['Gender'] === '1'){
+                                                echo "<td>Male</td>";
+                                            } elseif ($rows['Gender'] === '2'){
+                                                echo "<td>Female</td>";
+                                            } else {
+                                                echo "<td>Unknown</td>";
+                                            }
+                                            echo "<td>".$rows['DoB']."</td>";
+                                            echo "<td>".$rows['PhoneNum']."</td>";
+                                            echo "<td>".$rows['Email']."</td>";
+                                            echo "<td>".$rows['Address']."</td>";
+                                            echo "</tr>";
+                                        }
+                                    }
+                                ?>
                             </tbody>
                         </table>
                     </div>
