@@ -44,8 +44,7 @@ session_start();
                             <option value="2">Female</option>
                         </select>
                         </div>
-                        <div
-                            class="form-group">
+                        <div class="form-group">
                             <h5 style="margin-left: 230px;width: 300px;">Date of birth</h5><input class="form-control" type="date" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="admindob"></div>
                 <div class="form-group">
                     <input class="form-control" type="tel" style="width: 300px;margin-left: 230px;background-color: rgb(247,249,252);" name="adminphone" placeholder="012-3456789">
@@ -94,8 +93,8 @@ session_start();
             }
         
             //insert the data into the database
-            $sql = "Insert into adminhost (Name, IC, Gender, DoB, PhoneNum, Email, password, Address) 
-            values ('$username', '$ic','$gender','$dob',$phone','$email',".md5($password)."','$address');";
+            $sql = "Insert into adminhost (Name, IC, Gender, DoB, PhoneNum, Email, password, Address, Category) 
+            values ('$username', '$ic','$gender','$dob',$phone','$email',".md5($password)."','$address', '1');";
         
             // echo $sql;
             //if connection with Db failed then unable to register, else register successfully
