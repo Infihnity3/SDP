@@ -27,9 +27,20 @@
             <h1 class="text-center">Rooms</h1>
             <div class="row roomlist" style="margin: 25px 0px 25px 0px;background-color: #ffffff;">
                 <div class="col-md-12" style="background-color: rgb(255,255,255); border: solid; border-width:1px;" >
-                    <h3 style="width: 500px;">Room name</h3>
-                    <p class="d-inline" style="width: 700px;">Description</p>
-                    <a class="btn btn-primary float-right" role="button" style="margin: 10px;padding:10px;width: 100px;height: 50px;background-color: rgb(17,112,49);" href="captcha.php">Join</a>
+                
+
+                    <?php include "conn.php";
+                        $sql = "select roomName, roomRequirement from room";//add a new sql query
+                        $result = mysqli_query($conn, $sql);
+                        while($rows = mysqli_fetch_array($result))
+                                    {   
+                                        echo "<tr>";
+                                        echo "<h3 style='width: 500px;'>".$rows['roomName']."</h3>";
+                                        echo "<p class='d-inline' style='width: 700px;'>".$rows['roomRequirement']."</p>";
+                                        echo "<td><a class='btn btn-primary float-right' role='button' style='margin: 10px;padding:10px;width: 100px;height: 50px;background-color: rgb(17,112,49);' href='captcha.php'>Join</a></td>";
+                                }
+                    ?>
+                    
                 </div>
                <!-- loop the room -->
 
