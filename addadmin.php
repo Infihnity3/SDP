@@ -94,7 +94,7 @@ session_start();
         
             //insert the data into the database
             $sql = "Insert into adminhost (Name, IC, Gender, DoB, PhoneNum, Email, password, Address, Category) 
-            values ('$username', '$ic','$gender','$dob','$phone','$email','$password','$address','1');";
+            values ('$username', '$ic','$gender','$dob','$phone','$email','".md5($password)."','$address','1');";
         
             // echo $sql;
             //if connection with Db failed then unable to register, else register successfully
