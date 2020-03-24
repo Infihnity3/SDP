@@ -76,15 +76,15 @@ session_start();
         include "conn.php";
         if(isset($_POST['adminname'])){//if the information input then the function below will start.
             //retrieve data from the top
-            $username = mysqli_real_escape_string($conn,$_POST['adminname']);
-            $ic = mysqli_real_escape_string($conn,$_POST['adminic']);
-            $gender = mysqli_real_escape_string($conn,$_POST['admingender']);
-            $dob = date('Y-m-d', strtotime($_POST['admindob']));
-            $phone = mysqli_real_escape_string($conn,$_POST['adminphone']);
-            $address = mysqli_real_escape_string($conn,$_POST['adminaddress']);
-            $email = mysqli_real_escape_string($conn,$_POST['adminemail']);
-            $password = mysqli_real_escape_string($conn,$_POST['adminpassword1']);
-            $confirmpass = mysqli_real_escape_string($conn,$_POST['adminpassword2']);
+            $username = $_POST['adminname'];
+            $ic = $_POST['adminic'];
+            $gender = $_POST['admingender'];
+            $dob = $_POST['admindob'];
+            $phone = $_POST['adminphone'];
+            $address = $_POST['adminaddress'];
+            $email = $_POST['adminemail'];
+            $password = $_POST['adminpassword1'];
+            $confirmpass = $_POST['adminpassword2'];
             //if password and confirm pass is different then it will not be able to register.
             if($password !== $confirmpass){
                 
@@ -94,7 +94,7 @@ session_start();
         
             //insert the data into the database
             $sql = "Insert into adminhost (Name, IC, Gender, DoB, PhoneNum, Email, password, Address, Category) 
-            values ('$username', '$ic','$gender','$dob',$phone','$email',".md5($password)."','$address', '1');";
+            values ('$username', '$ic','$gender','$dob','$phone','$email','$password','$address','1');";
         
             // echo $sql;
             //if connection with Db failed then unable to register, else register successfully
